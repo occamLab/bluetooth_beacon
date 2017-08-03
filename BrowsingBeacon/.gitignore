@@ -1,9 +1,14 @@
+# IntelliJ IDEA
+.idea
 *.iml
+classes
+out
+
+# Gradle
 .gradle
-/local.properties
-/.idea/workspace.xml
-/.idea/libraries
+build
+local.properties
+gen
+
+# Mac
 .DS_Store
-/build
-/captures
-.externalNativeBuild
