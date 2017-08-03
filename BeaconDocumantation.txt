@@ -1,0 +1,15 @@
+Estimote Beacon 
+
+Teating App
+  Beacon varied on when they where being detected
+  The beacon that ware cloer to the phone had higher priority than the further beacon
+  Detecting beacon from outside ware not that reliable compare to inside
+  Its takes a while for the phone to detect the beacon
+
+Beacon In General
+  Once you detect beacon theirs no way a phone can navigate to it
+  Beacon to beacon detection is very accurate
+  You can get the 3D position of the beacon but not that accurate
+  Older beacon don't workwith the nwer Estimote SDK depadning what maleware you have
+  
+   
