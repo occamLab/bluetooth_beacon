@@ -12,6 +12,11 @@ Testing App TestRun2 stripmall simulator
   If walking outter most of the sidewalk beacon were being detected two to three meter ahed of the beacon or in some cases in front of the beacons
   If walking inner most of the sidewalk beacon were being detected in front of the beacon or half of meter ahead or pass the beacons
 
+Testing App TestRun 3 open field
+  In general beacon were very inconsistent when being detected
+  When you are closer to the beacon (when walking) they were being detected from half of a meter to a meter past the beacon in some case were not being detected
+  When furhter away from the beacon (when walking) this is were it was being inconsistent in some cases they were being detected about a meter or furhter ahead and past the beacon on other cases not even being detected by the device
+
 Beacon In General
   Once you detect beacon theirs no way a phone can navigate to it
   Beacon to beacon detection is very accurate
