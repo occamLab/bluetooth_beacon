@@ -41,6 +41,7 @@ public class BrowsingActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.browsing_beacon);
 
+        //Setting everything up
         adapter = new BeaconListAdapter(this);
         DataBeacon beacon1 = new DataBeacon(36513,11819,false, "Campus Center");
         DataBeacon beacon2 = new DataBeacon(29246,7567,false, "Academic Center");
@@ -51,6 +52,7 @@ public class BrowsingActivity extends Activity{
         textView = (TextView) findViewById(R.id.locationArea);
         signalText = (TextView) findViewById(R.id.signalStrenght);
 
+        //setting up the text to speech
         textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -68,19 +70,21 @@ public class BrowsingActivity extends Activity{
         beaconManager.setRangingListener(new BeaconManager.RangingListener() {
             @Override
             public void onBeaconsDiscovered(Region region, final List<Beacon> beacons) {
-                System.out.println("Beacon Discovered");
+                //set the adapter and check to see if their an item
                 adapter.replaceWith(beacons);
                 if(adapter.getCount() != 0){
                     if(adapter.getItem(0) != null){
-                        mBeacon = adapter.getItem(0);
-                        strenght = mBeacon.getRssi();
-                        signalText.setText(Integer.toString(strenght));
+                        mBeacon = adapter.getItem(0); //get the beacon
+                        strenght = mBeacon.getRssi(); //get the RSSI number
+                        signalText.setText(Integer.toString(strenght)); //print out the RSSI
+                        //if RSSI is high enough send beacon to the method
                         if(mBeacon.getRssi() >= -85){
                             locateBeacon(mBeacon);
                             reset = false;
                         }
                     }
                 }else{
+                    //send to the method
                     if(reset == false){
                         resetEverything();
                         reset = true;
@@ -120,6 +124,7 @@ public class BrowsingActivity extends Activity{
         });
     }
 
+    //find the beacon and tells and prints out the location
     public void locateBeacon(Beacon beacon){
 
         for(DataBeacon b: beaconList){
@@ -139,6 +144,7 @@ public class BrowsingActivity extends Activity{
 
     }
 
+    //sets all discovered to false
     public void resetEverything(){
         TextView statusTextView = (TextView) findViewById(R.id.locationArea);
         statusTextView.setText("No Location Found");
