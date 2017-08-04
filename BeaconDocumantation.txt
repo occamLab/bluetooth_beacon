@@ -1,26 +1,27 @@
 Estimote Beacon 
 
-Teating App TestRun 1
-  Beacon varied on when they where being detected
-  The beacon that ware cloer to the phone had higher priority than the further beacon
+Testing App TestRun 1
+  Beacon varied on when they were being detected
+  The beacon that ware closer to the phone had higher priority than the further beacon
   Detecting beacon from outside ware not that reliable compare to inside
   Its takes a while for the phone to detect the beacon
 
 Testing App TestRun2 stripmall simulator
-  Beacons that are furhter away can be detected two to thre meter ahead of the beacon or in some cases in front of the beacon
-  Beacons that were closer together were being detected half of meter past the beacon or in some cses in front of the beacons
-  If walking outter most of the sidewalk beacon were being detected two to three meter ahed of the beacon or in some cases in front of the beacons
-  If walking inner most of the sidewalk beacon were being detected in front of the beacon or half of meter ahead or pass the beacons
+  Beacons that are further away can be detected two to three meter ahead of the beacon or in some cases in front of the beacon
+  Beacons that were closer together were being detected half of meter past the beacon or in some cases in front of the beacons
+  If walking outermost of the sidewalk beacon were being detected two to three meter ahead of the beacon or in some cases in front of the beacons
+  If walking innermost of the sidewalk beacon were being detected in front of the beacon or half of meter ahead or pass the beacons
 
 Testing App TestRun 3 open field
   In general beacon were very inconsistent when being detected
   When you are closer to the beacon (when walking) they were being detected from half of a meter to a meter past the beacon in some case were not being detected
-  When furhter away from the beacon (when walking) this is were it was being inconsistent in some cases they were being detected about a meter or furhter ahead and past the beacon on other cases not even being detected by the device
+  When further away from the beacon (when walking) this is where it was being inconsistent in some cases they were being detected about a meter or further ahead and past the beacon on other cases not even being detected by the device
 
 Beacon In General
-  Once you detect beacon theirs no way a phone can navigate to it
+  Once you detect beacon their no way a phone can navigate to it
   Beacon to beacon detection is very accurate
   You can get the 3D position of the beacon but not that accurate
-  Older beacon don't workwith the nwer Estimote SDK depadning what maleware you have
+  Older beacon don't work with the nwer Estimote SDK depending what maleware you have
   
    
+
