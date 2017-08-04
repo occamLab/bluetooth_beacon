@@ -24,17 +24,17 @@ import java.util.Locale;
 public class BrowsingActivity extends Activity{
 
     private static final String TAG = BrowsingActivity.class.getSimpleName();
-
-
     private static final Region ALL_ESTIMOTE_BEACONS_REGION = new Region("rid", null, null, null);
 
     private BeaconManager beaconManager;
     private BeaconListAdapter adapter;
     Beacon mBeacon;
-    int minor;
-    int major;
     public TextToSpeech textToSpeech;
     public ArrayList<DataBeacon> beaconList = new ArrayList<DataBeacon>();
+    public boolean reset = true;
+    TextView textView;
+    int strenght;
+    TextView signalText;
 
 
     @Override protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +42,14 @@ public class BrowsingActivity extends Activity{
         setContentView(R.layout.browsing_beacon);
 
         adapter = new BeaconListAdapter(this);
-        DataBeacon beacon1 = new DataBeacon(36513,11819,false);
-        DataBeacon beacon2 = new DataBeacon(29246,7567,false);
-        DataBeacon beacon3 = new DataBeacon(17986,64068,false);
+        DataBeacon beacon1 = new DataBeacon(36513,11819,false, "Campus Center");
+        DataBeacon beacon2 = new DataBeacon(29246,7567,false, "Academic Center");
+        DataBeacon beacon3 = new DataBeacon(17986,64068,false, "Milas Hall");
         beaconList.add(beacon1);
         beaconList.add(beacon2);
         beaconList.add(beacon3);
+        textView = (TextView) findViewById(R.id.locationArea);
+        signalText = (TextView) findViewById(R.id.signalStrenght);
 
         textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
@@ -66,33 +68,24 @@ public class BrowsingActivity extends Activity{
         beaconManager.setRangingListener(new BeaconManager.RangingListener() {
             @Override
             public void onBeaconsDiscovered(Region region, final List<Beacon> beacons) {
+                System.out.println("Beacon Discovered");
                 adapter.replaceWith(beacons);
                 if(adapter.getCount() != 0){
                     if(adapter.getItem(0) != null){
                         mBeacon = adapter.getItem(0);
-                        for(DataBeacon b: beaconList){
-
-                            if(b.getMajor() == mBeacon.getMajor() && b.getMinor() == mBeacon.getMinor()){
-                                if(b.getIsDiscovered() == false){
-                                    b.setIsDiscovered(true);
-                                    beaconLocation(mBeacon);
-                                }
-                            }
-                            else{
-                                if(b.getIsDiscovered()){
-                                    b.setIsDiscovered(false);
-                                }
-                            }
+                        strenght = mBeacon.getRssi();
+                        signalText.setText(Integer.toString(strenght));
+                        if(mBeacon.getRssi() >= -85){
+                            locateBeacon(mBeacon);
+                            reset = false;
                         }
                     }
                 }else{
-                    TextView statusTextView = (TextView) findViewById(R.id.locationArea);
-                    statusTextView.setText("No Location Found");
-                    for(DataBeacon iB: beaconList){
-                        if(iB.getIsDiscovered()){
-                            iB.setIsDiscovered(false);
-                        }
+                    if(reset == false){
+                        resetEverything();
+                        reset = true;
                     }
+
                 }
             }
         });
@@ -127,57 +120,32 @@ public class BrowsingActivity extends Activity{
         });
     }
 
-    public void beaconLocation(Beacon beacon){
+    public void locateBeacon(Beacon beacon){
 
-        major = beacon.getMajor();
-        minor  = beacon.getMinor();
+        for(DataBeacon b: beaconList){
+            if(b.getMajor() == beacon.getMajor() && b.getMinor() == beacon.getMinor()){
+                if(b.getIsDiscovered() == false){
+                    b.setIsDiscovered(true);
+                    textToSpeech.speak(b.getLocation(), TextToSpeech.QUEUE_ADD, null, null);
+                    textView.setText(b.getLocation());
+                }
+            }
+            else{
+                if(b.getIsDiscovered()){
+                    b.setIsDiscovered(false);
+                }
+            }
+        }
 
-        if(major == 29246 && minor == 7567){
-            Context context = getApplicationContext();
-            CharSequence text = "Academic Center";
-            int duration = Toast.LENGTH_SHORT;
+    }
 
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
-
-            TextView statusTextView = (TextView) findViewById(R.id.locationArea);
-            statusTextView.setText("Academic Center");
-
-            textToSpeech.speak("Academic Center", TextToSpeech.QUEUE_ADD, null, null);
-
-        } else if(major == 36513 && minor == 11819){
-            Context context = getApplicationContext();
-            CharSequence text = "Campus Center";
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
-
-            TextView statusTextView = (TextView) findViewById(R.id.locationArea);
-            statusTextView.setText("Campus Center");
-
-            textToSpeech.speak("Campus Center", TextToSpeech.QUEUE_ADD, null, null);
-
-        } else if(major == 17986 && minor == 64068){
-            Context context = getApplicationContext();
-            CharSequence text = "Milas Hall";
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
-
-            TextView statusTextView = (TextView) findViewById(R.id.locationArea);
-            statusTextView.setText("Milas Hall");
-
-            textToSpeech.speak("Milas Hall", TextToSpeech.QUEUE_ADD, null, null);
-
-        } else{
-
-            TextView statusTextView = (TextView) findViewById(R.id.locationArea);
-            statusTextView.setText("No Location FOund");
-
-            Log.e(TAG,Integer.toString(major));
-            Log.e(TAG,Integer.toString(minor));
+    public void resetEverything(){
+        TextView statusTextView = (TextView) findViewById(R.id.locationArea);
+        statusTextView.setText("No Location Found");
+        for(DataBeacon iB: beaconList){
+            if(iB.getIsDiscovered()){
+                iB.setIsDiscovered(false);
+            }
         }
     }
 }

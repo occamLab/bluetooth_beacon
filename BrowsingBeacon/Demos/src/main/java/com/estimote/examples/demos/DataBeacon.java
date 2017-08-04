@@ -5,11 +5,13 @@ public class DataBeacon {
     private int _major;
     private int _minor;
     private boolean _isDiscovered;
+    private String _location;
 
-    public DataBeacon(int major, int minor, boolean isDiscovered ){
+    public DataBeacon(int major, int minor, boolean isDiscovered, String location ){
         _major = major;
         _minor = minor;
         _isDiscovered = isDiscovered;
+        _location = location;
 
     }
 
@@ -31,5 +33,10 @@ public class DataBeacon {
     public int getMinor(){
 
         return _minor;
+    }
+
+    public String getLocation(){
+
+        return _location;
     }
 }
